@@ -19,7 +19,7 @@ export default function Character({ character }: { character: string }) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-2 p-4 bg-slate-100 rounded-lg md:w-1/4 w-full ">
+    <div className="flex flex-col items-center justify-center gap-2 p-4 bg-black/5 shadow-md rounded-lg md:w-1/4 w-full ">
       <div className="text-center">
         <h1 className="text-3xl font-bold">{character}</h1>
         <button
