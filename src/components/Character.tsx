@@ -19,15 +19,12 @@ export default function Character({ character }: { character: string }) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-2 p-4 bg-black/5 shadow-md rounded-lg md:w-1/4 w-full ">
+    <div
+      className="flex flex-col items-center justify-center gap-2 p-4 w-full md:w-1/4 bg-black/20 shadow-md rounded-lg cursor-pointer"
+      onClick={copyToClipboard}
+    >
       <div className="text-center">
         <h1 className="text-3xl font-bold">{character}</h1>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
-          onClick={copyToClipboard}
-        >
-          Copy
-        </button>
         <ToastContainer />
       </div>
     </div>
