@@ -19,19 +19,21 @@ function App() {
   ];
 
   return (
-    <main className="min-h-screen p-4 flex flex-col gap-6 bg-gray-800 text-white">
-      <h1 className="text-center text-3xl font-bold">I can't type french</h1>
-      <p className="text-center text-lg">
-        Website created because I'm sick of trying to type french characters
-        with my english keyboard
-      </p>
-      <p className="text-center text-lg font-bold">
-        Click or tap a card to copy the character
-      </p>
-      <div className="flex flex-col md:flex-row flex-wrap gap-5 justify-center">
-        {characters.map((character) => (
-          <Character key={character} character={character} />
-        ))}
+    <main className="min-h-screen flex items-center justify-center px-5 py-12">
+      <div className="w-full max-w-3xl">
+        <header className="mb-8 text-center">
+          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+            I can't type French
+          </h1>
+          <p className="mt-3 text-sm text-slate-400 sm:text-base">
+            Click a character to copy it.
+          </p>
+        </header>
+        <div className="grid grid-cols-3 gap-3 min-[400px]:grid-cols-4 sm:grid-cols-7">
+          {characters.map((character) => (
+            <Character key={character} character={character} />
+          ))}
+        </div>
       </div>
     </main>
   );

@@ -1,32 +1,38 @@
-import { Bounce, ToastContainer, toast } from "react-toastify";
+import { useEffect, useState } from "react";
 
 export default function Character({ character }: { character: string }) {
-  const notify = () =>
-    toast.success(`${character} copied to clipboard`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      transition: Bounce,
-    });
-  function copyToClipboard() {
-    navigator.clipboard.writeText(character);
-    notify();
+  const [status, setStatus] = useState("idle");
+
+  useEffect(() => {
+    if (status !== "copied" && status !== "failed") return;
+    const timer = window.setTimeout(() => setStatus("idle"), 2000);
+    return () => window.clearTimeout(timer);
+  }, [status]);
+
+  async function copyToClipboard() {
+    setStatus("copying");
+    try {
+      await navigator.clipboard.writeText(character);
+      setStatus("copied");
+    } catch {
+      setStatus("failed");
+    }
   }
 
   return (
-    <div
-      className="flex flex-col items-center justify-center gap-2 p-4 w-full md:w-1/4 bg-black/20 shadow-md rounded-lg cursor-pointer"
+    <button
+      type="button"
+      className="character-key"
+      aria-label={`Copy ${character}`}
+      disabled={status === "copying"}
+      data-copied={status === "copied"}
       onClick={copyToClipboard}
     >
-      <div className="text-center">
-        <h1 className="text-3xl font-bold">{character}</h1>
-        <ToastContainer />
-      </div>
-    </div>
+      <span className="text-4xl font-medium sm:text-5xl" aria-hidden="true">{character}</span>
+      <span className="key-status" role="status" aria-atomic="true">
+        {status === "copied" ? "Copied" : status === "failed" ? "Try again" : ""}
+        <span className="sr-only">{status === "copied" ? ` ${character}` : status === "failed" ? `: could not copy ${character}` : ""}</span>
+      </span>
+    </button>
   );
 }
